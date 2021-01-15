@@ -1,14 +1,28 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    color: #fff;
-    background-color: #ebf2f5;
+body {
+  background-color: #ebf2f5;
 }
 
-body, input, button, textarea {
-    font: 600 18px Nunito, sans-serif;
+body,
+input,
+button,
+select,
+textarea {
+  font: 600 18px Nunito, sans-serif;
+}
+
+.box {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #d3e2e5;
+  border-radius: 20px;
+  padding: 40px 25px;
+  overflow: hidden;
 }
