@@ -1,11 +1,16 @@
 .dashboard {
-    width: 100vw;
-    height: 100vh;
-  
-    position: relative;
-    display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: #6155a6;
 }
 
-.dashboard h1{
-    color: black;
+.dashboard h1 {
+  color: black;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  text-align: center;
 }
