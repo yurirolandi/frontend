@@ -1,22 +1,18 @@
 import React from "react";
-import Form from '../../components/Form/Form';
-import './landing.css';
+import Table from "../../components/Table/Table";
+import SideBar from "../../components/SideBar/SideBar";
+import AddMonth from "../../components/AddMonth/AddMonth";
 
-import { Link } from "react-router-dom";
-
+import "./landing.css";
 
 function Landing() {
+  
   return (
-    <div id="page-landing">
-      <div className="content-wrapper">
-
-        <main>
-          <Form />
-        </main>
-
-        {/* <Link to="/Dashboard" className="enter-app">
-          Entrar
-        </Link> */}
+    <div className="page-landing">
+      <SideBar />
+      <div className="container">
+        <AddMonth />
+        <Table />
       </div>
     </div>
   );
