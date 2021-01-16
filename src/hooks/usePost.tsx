@@ -3,19 +3,17 @@ import reducer from "./rest";
 import api from "../services/api";
 
 function usePost(url: string) {
-  console.log('url', url)
   const [data, dispatch] = useReducer(reducer, {
     data: {},
   });
-  const post = (data: Object) => {
+  const post = async (data: Object) => {
     dispatch({
       type: "REQUEST",
     });
-    api.post(`${url}.json`, data).then((response) => {
-      dispatch({
-        type: "SUCCESS",
-        data: response.data,
-      });
+    const response = await api.post(`${url}.json`, data);
+    dispatch({
+      type: "SUCCESS",
+      data: response.data,
     });
   };
 
