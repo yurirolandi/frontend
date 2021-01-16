@@ -17,10 +17,10 @@ export default function Table() {
       <table className="table">
         <thead>
           <tr>
-            <th>Mes</th>
-            <th>Nome</th>
-            <th>Valor</th>
-            <th>Tipo</th>
+            <th>Mês</th>
+            <th>Entrada</th>
+            <th>Saida</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -31,9 +31,9 @@ export default function Table() {
                   <td>
                     <Link to={`/movement/${d}`}>{d}</Link>
                   </td>
-                  <td>{data[d].nome}</td>
-                  <td>{data[d].valor}</td>
-                  <td>{data[d].tipo}</td>
+                  <td>{data[d].entrada}</td>
+                  <td>{data[d].saida}</td>
+                  <td>{data[d].Total}</td>
                 </tr>
               );
             })}
