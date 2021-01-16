@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import api from "../../services/api";
+import useGet from "../../hooks/useGet";
+import usePost from "../../hooks/usePost";
+import useDelete from "../../hooks/useDelete";
 import { FaTrash } from "react-icons/fa";
 
 function Movement(props: any) {
-  const [movement, setMovement] = useState<any>();
+  const data = useGet(`movimentacoes/${props.match.params.data}`);
+  const [postData, salvar] = usePost(
+    `movimentacoes/${props.match.params.data}`
+  );
+  const [removeData, remover] = useDelete();
   const [nome, setDescricao] = useState<string>(" ");
   const [tipo, setTipo] = useState<string>(" ");
   const [valor, setValor] = useState<string>("");
-  useEffect(() => {
-    api
-      .get(`movimentacoes/${props.match.params.data}.json`)
-      .then((response) => {
-        setMovement(response.data);
-      });
-  }, [props.match.params.data]);
 
   function onChangeDescricao(evt: any): void {
     setDescricao(evt.target.value);
@@ -26,16 +26,21 @@ function Movement(props: any) {
     setTipo(evt.target.value);
   }
 
-  function save(): void {
-    api.post(`movimentacoes/${props.match.params.data}.json`, {
+  async function save() {
+    await salvar({
       nome,
       valor,
       tipo,
     });
+    setDescricao("");
+    setTipo("");
+    setValor("");
+    data.refetch();
   }
 
   async function remove(id: any) {
-    await api.delete(`movimentacoes/${props.match.params.data}/${id}.json`);
+    await remover(`movimentacoes/${props.match.params.data}/${id}`);
+    data.refetch();
   }
 
   return (
@@ -54,13 +59,13 @@ function Movement(props: any) {
             </thead>
 
             <tbody>
-              {movement &&
-                Object.keys(movement).map((move) => {
+              {data.data &&
+                Object.keys(data.data).map((move) => {
                   return (
                     <tr key={move}>
-                      <td>{movement[move].nome}</td>
-                      <td>{movement[move].valor}</td>
-                      <td>{movement[move].tipo}</td>
+                      <td>{data.data[move].nome}</td>
+                      <td>{data.data[move].valor}</td>
+                      <td>{data.data[move].tipo}</td>
                       <td>
                         <button
                           className="btn btn-danger ml-2"
