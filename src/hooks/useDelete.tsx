@@ -7,14 +7,13 @@ function useDelete() {
   const [data, dispatch] = useReducer(reducer, {
     data: {},
   });
-  const remove = (url: string) => {
+  const remove = async (url: string) => {
     dispatch({
       type: "REQUEST",
     });
-    api.delete(`${url}.json`).then(() => {
-      dispatch({
-        type: "SUCCESS",
-      });
+    await api.delete(`${url}.json`);
+    dispatch({
+      type: "SUCCESS",
     });
   };
   return [data, remove];
