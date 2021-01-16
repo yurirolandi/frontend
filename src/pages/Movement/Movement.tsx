@@ -5,7 +5,6 @@ import { FaTrash } from "react-icons/fa";
 
 function Movement(props: any) {
   const [movement, setMovement] = useState<any>();
-  const [dataMeses, setDataMeses] = useState<any>();
   const [nome, setDescricao] = useState<string>(" ");
   const [tipo, setTipo] = useState<string>(" ");
   const [valor, setValor] = useState<string>("");
@@ -61,10 +60,10 @@ function Movement(props: any) {
                     <tr key={move}>
                       <td>{movement[move].nome}</td>
                       <td>{movement[move].valor}</td>
+                      <td>{movement[move].tipo}</td>
                       <td>
-                        {movement[move].tipo}
                         <button
-                          className="btn btn-danger mr-1 ml-2"
+                          className="btn btn-danger ml-2"
                           onClick={() => remove(move)}
                         >
                           <FaTrash />
@@ -80,13 +79,26 @@ function Movement(props: any) {
                     type="text"
                     onChange={onChangeDescricao}
                     value={nome}
+                    size={10}
                   />
                 </td>
                 <td>
-                  <input type="text" onChange={onChangeValor} value={valor} />
+                  <input
+                    type="text"
+                    onChange={onChangeValor}
+                    value={valor}
+                    size={10}
+                  />
                 </td>
                 <td>
-                  <input type="text" onChange={onChangeTipo} value={tipo} />
+                  <input
+                    type="text"
+                    onChange={onChangeTipo}
+                    value={tipo}
+                    size={10}
+                  />
+                </td>
+                <td>
                   <button className="btn btn-success ml-2" onClick={save}>
                     Salvar
                   </button>
