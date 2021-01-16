@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
-import api from "../../services/api";
 import useGet from "../../hooks/useGet";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";

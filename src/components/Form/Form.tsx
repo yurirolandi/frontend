@@ -1,10 +1,8 @@
 import React, { FormEvent, useState } from "react";
-import { useHistory } from "react-router-dom";
-import "./Form.css";
+import "./form.css";
 import api from "../../services/api";
 
 export default function Form() {
-  const history = useHistory();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
