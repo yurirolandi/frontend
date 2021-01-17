@@ -6,10 +6,6 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.3",
     "dotenv": "^8.2.0",
@@ -18,7 +14,6 @@
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "typescript": "~3.7.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -44,9 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-leaflet": "^2.5.2",
-    "@types/react-router-dom": "^5.1.6"
   }
 }
