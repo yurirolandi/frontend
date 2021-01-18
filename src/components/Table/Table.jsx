@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import api from "../../services/api";
+import useGet from "../../hooks/useGet";
 
 export default function Table() {
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    api.get("meses.json").then((response) => {
-      setData(response.data);
-    });
-  }, []);
-
-
+  const data = useGet(`meses`);
   return (
     <div className="box">
       <table className="table">
@@ -24,16 +16,16 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {data &&
-            Object.keys(data).map((d) => {
+          {data.data &&
+            Object.keys(data.data).map((d) => {             
               return (
                 <tr key={d}>
                   <td>
                     <Link to={`/movement/${d}`}>{d}</Link>
                   </td>
-                  <td>{data[d].entrada}</td>
-                  <td>{data[d].saida}</td>
-                  <td>{data[d].Total}</td>
+                  <td>{data.data[d].Total}</td>
+                  <td>{data.data[d].entrada}</td>
+                  <td>{data.data[d].saida}</td>
                 </tr>
               );
             })}
