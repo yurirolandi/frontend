@@ -17,15 +17,16 @@ export default function Table() {
         </thead>
         <tbody>
           {data.data &&
-            Object.keys(data.data).map((d) => {             
+            Object.keys(data.data).map((d) => {
+              let id = Object.keys(data.data[d]);
               return (
                 <tr key={d}>
                   <td>
                     <Link to={`/movement/${d}`}>{d}</Link>
                   </td>
-                  <td>{data.data[d].Total}</td>
-                  <td>{data.data[d].entrada}</td>
-                  <td>{data.data[d].saida}</td>
+                  <td>{data.data[d][id].entrada}</td>
+                  <td>{data.data[d][id].saida}</td>
+                  <td>{data.data[d][id].Total}</td>
                 </tr>
               );
             })}
