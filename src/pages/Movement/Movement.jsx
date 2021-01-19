@@ -15,17 +15,14 @@ function Movement(props) {
   );
   const [removeData, remover] = useDelete();
   const [nome, setDescricao] = useState(" ");
-  const [tipo, setTipo] = useState(" ");
   const [valor, setValor] = useState("");
 
   async function save() {
     await salvar({
       nome,
       valor,
-      tipo,
     });
     setDescricao("");
-    setTipo("");
     setValor("");
     data.refetch();
     setTimeout(() => {
@@ -44,36 +41,9 @@ function Movement(props) {
   return (
     <div className="movement">
       <SideBar />
-      <div className="container">
-        <h1>Movimentação</h1>
-        {dataMeses && (
-          <div className="box mb-2">
-            {Object.keys(dataMeses.data).map((id) => {
-              return (
-                <div key={id}>
-                  <p>
-                    <span>Previsão de entrada:</span>{" "}
-                    <input
-                      size={10}
-                      type="text"
-                      onBlur={(evt) => {
-                        patch(`meses/${props.match.params.data}/${id}`, {
-                          entrada: evt.target.value,
-                        });
-                      }}
-                    />{" "}
-                    {dataMeses.data[id].entrada}
-                  </p>
-                  <p>
-                    <span>Previsão de saida:</span>{" "}
-                    <input size={10} type="text" /> {dataMeses.data[id].saida}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        )}
+      <div className="container mt-5">
         <div className="box">
+          <h1 className="mb-4 text-center">Movimentação</h1>
           <table className="table">
             <thead>
               <tr>
@@ -90,7 +60,6 @@ function Movement(props) {
                     <tr key={move}>
                       <td>{data.data[move].nome}</td>
                       <td>{data.data[move].valor}</td>
-                      <td>{data.data[move].tipo}</td>
                       <td>
                         <button
                           className="btn btn-danger ml-2"
@@ -109,7 +78,7 @@ function Movement(props) {
                     type="text"
                     onChange={(evt) => setDescricao(evt.target.value)}
                     value={nome}
-                    size={10}
+                    size={8}
                   />
                 </td>
                 <td>
@@ -117,15 +86,7 @@ function Movement(props) {
                     type="text"
                     onChange={(evt) => setValor(evt.target.value)}
                     value={valor}
-                    size={10}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    onChange={(evt) => setTipo(evt.target.value)}
-                    value={tipo}
-                    size={10}
+                    size={8}
                   />
                 </td>
                 <td>
