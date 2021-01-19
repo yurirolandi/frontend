@@ -3,13 +3,12 @@ import SideBar from "../../components/SideBar/SideBar";
 import useGet from "../../hooks/useGet";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
-import usePatch from "../../hooks/usePatch";
 import { FaTrash } from "react-icons/fa";
 
 function Movement(props) {
   const data = useGet(`movimentacoes/${props.match.params.data}`);
   const dataMeses = useGet(`meses/${props.match.params.data}`);
-  const [dataPath, patch] = usePatch();
+  const [parcelas, setParcelas] = useState("01");
   const [postData, salvar] = usePost(
     `movimentacoes/${props.match.params.data}`
   );
@@ -17,10 +16,16 @@ function Movement(props) {
   const [nome, setDescricao] = useState(" ");
   const [valor, setValor] = useState("");
 
+  const parcela = [];
+  for (let i = 1; i <= 12; i++) {
+    i <= 9 ? parcela.push(`0${i}`) : parcela.push(i);
+  }
+
   async function save() {
     await salvar({
       nome,
       valor,
+      parcelas
     });
     setDescricao("");
     setValor("");
@@ -49,7 +54,8 @@ function Movement(props) {
               <tr>
                 <th>Nome</th>
                 <th>Valor</th>
-                <th>Tipo</th>
+                <th>Parcelas</th>
+                <th> </th>
               </tr>
             </thead>
 
@@ -60,6 +66,7 @@ function Movement(props) {
                     <tr key={move}>
                       <td>{data.data[move].nome}</td>
                       <td>{data.data[move].valor}</td>
+                      <td>{data.data[move].parcelas}</td>
                       <td>
                         <button
                           className="btn btn-danger ml-2"
@@ -90,7 +97,20 @@ function Movement(props) {
                   />
                 </td>
                 <td>
-                  <button className="btn btn-success ml-2" onClick={save}>
+                  <select
+                    className="form-select p-1"
+                    onChange={(evt) => setParcelas(evt.target.value)}
+                    value={parcelas}
+                  >
+                    {parcela.map((p) => (
+                      <option key={p} value={p}>
+                        {p}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <button className="btn btn-success" onClick={save}>
                     Salvar
                   </button>
                 </td>
