@@ -3,10 +3,13 @@ import SideBar from "../../components/SideBar/SideBar";
 import useGet from "../../hooks/useGet";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
+import usePatch from "../../hooks/usePatch";
 import { FaTrash } from "react-icons/fa";
 
 function Movement(props) {
   const data = useGet(`movimentacoes/${props.match.params.data}`);
+  const dataMeses = useGet(`meses/${props.match.params.data}`);
+  const [dataPath, patch] = usePatch();
   const [postData, salvar] = usePost(
     `movimentacoes/${props.match.params.data}`
   );
@@ -14,16 +17,6 @@ function Movement(props) {
   const [nome, setDescricao] = useState(" ");
   const [tipo, setTipo] = useState(" ");
   const [valor, setValor] = useState("");
-
-  function onChangeDescricao(evt) {
-    setDescricao(evt.target.value);
-  }
-  function onChangeValor(evt) {
-    setValor(evt.target.value);
-  }
-  function onChangeTipo(evt) {
-    setTipo(evt.target.value);
-  }
 
   async function save() {
     await salvar({
@@ -35,11 +28,17 @@ function Movement(props) {
     setTipo("");
     setValor("");
     data.refetch();
+    setTimeout(() => {
+      dataMeses.refetch();
+    }, 10000);
   }
 
   async function remove(id) {
     await remover(`movimentacoes/${props.match.params.data}/${id}`);
     data.refetch();
+    setTimeout(() => {
+      dataMeses.refetch();
+    }, 10000);
   }
 
   return (
@@ -47,6 +46,33 @@ function Movement(props) {
       <SideBar />
       <div className="container">
         <h1>Movimentação</h1>
+        {dataMeses && (
+          <div className="box mb-2">
+            {Object.keys(dataMeses.data).map((id) => {
+              return (
+                <div key={id}>
+                  <p>
+                    <span>Previsão de entrada:</span>{" "}
+                    <input
+                      size={10}
+                      type="text"
+                      onBlur={(evt) => {
+                        patch(`meses/${props.match.params.data}/${id}`, {
+                          entrada: evt.target.value,
+                        });
+                      }}
+                    />{" "}
+                    {dataMeses.data[id].entrada}
+                  </p>
+                  <p>
+                    <span>Previsão de saida:</span>{" "}
+                    <input size={10} type="text" /> {dataMeses.data[id].saida}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        )}
         <div className="box">
           <table className="table">
             <thead>
@@ -81,7 +107,7 @@ function Movement(props) {
                 <td>
                   <input
                     type="text"
-                    onChange={onChangeDescricao}
+                    onChange={(evt) => setDescricao(evt.target.value)}
                     value={nome}
                     size={10}
                   />
@@ -89,7 +115,7 @@ function Movement(props) {
                 <td>
                   <input
                     type="text"
-                    onChange={onChangeValor}
+                    onChange={(evt) => setValor(evt.target.value)}
                     value={valor}
                     size={10}
                   />
@@ -97,7 +123,7 @@ function Movement(props) {
                 <td>
                   <input
                     type="text"
-                    onChange={onChangeTipo}
+                    onChange={(evt) => setTipo(evt.target.value)}
                     value={tipo}
                     size={10}
                   />
