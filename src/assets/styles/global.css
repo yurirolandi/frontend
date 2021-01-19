@@ -26,3 +26,11 @@ textarea {
   padding: 40px 25px;
   overflow: hidden;
 }
+
+.warning{
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 10px;
+  border: 2px solid #ffeeba;
+  border-radius: 10px;
+}

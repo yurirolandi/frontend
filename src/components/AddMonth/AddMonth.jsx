@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import OptionsValues from '../Options/Options';
-import AlertComponent from '../Alert/AlertComponent';
+import OptionsValues from "../Options/Options";
 import useGet from "../../hooks/useGet";
 import usePost from "../../hooks/usePost";
 
@@ -8,10 +7,10 @@ export default function AddMonth() {
   const [dia, setDia] = useState("01");
   const [postData, salvar] = usePost(`meses/2021-${dia}`);
   const data = useGet(`meses`);
-  const [teste, setTeste] = useState(false);
+  const [show, setShow] = useState(false);
 
   async function addMes() {
-    if (Object.keys(data.data)[0] === `2021-${dia}`) return setTeste(true) 
+    if (Object.keys(data.data)[0] === `2021-${dia}`) return setShow(true);
     await salvar({
       saida: 0,
     });
@@ -38,7 +37,22 @@ export default function AddMonth() {
           Adicionar Mês
         </button>
       </div>
-     <AlertComponent props={teste} />
+
+      {show && (
+        <div className="warning">
+          <h5>
+            Mês já adicionado!{" "}
+            <button className="close" onClick={() => setShow(false)}>
+              x
+            </button>
+          </h5>
+
+          <p>
+            Me parece que esse mês já foi adicionado na sua lista, tente inserir
+            outro mês...
+          </p>
+        </div>
+      )}
     </div>
   );
 }
