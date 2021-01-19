@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
+import OptionsValues from "../../components/Options/Options";
 import useGet from "../../hooks/useGet";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
@@ -13,26 +14,25 @@ function Movement(props) {
     `movimentacoes/${props.match.params.data}`
   );
   const [removeData, remover] = useDelete();
-  const [nome, setDescricao] = useState(" ");
+  const [nome, setDescricao] = useState("");
   const [valor, setValor] = useState("");
 
-  const parcela = [];
-  for (let i = 1; i <= 12; i++) {
-    i <= 9 ? parcela.push(`0${i}`) : parcela.push(i);
-  }
-
   async function save() {
-    await salvar({
-      nome,
-      valor,
-      parcelas
-    });
-    setDescricao("");
-    setValor("");
-    data.refetch();
-    setTimeout(() => {
-      dataMeses.refetch();
-    }, 10000);
+    if (nome !== "" && valor !== "") {
+      await salvar({
+        nome,
+        valor,
+        parcelas,
+      });
+      setDescricao("");
+      setValor("");
+      data.refetch();
+      setTimeout(() => {
+        dataMeses.refetch();
+      }, 10000);
+    } else {
+      console.log('vazio')
+    }
   }
 
   async function remove(id) {
@@ -102,11 +102,7 @@ function Movement(props) {
                     onChange={(evt) => setParcelas(evt.target.value)}
                     value={parcelas}
                   >
-                    {parcela.map((p) => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
+                    <OptionsValues />
                   </select>
                 </td>
                 <td>

@@ -1,21 +1,17 @@
 import React, { useState } from "react";
+import OptionsValues from '../Options/Options';
+import AlertComponent from '../Alert/AlertComponent';
 import useGet from "../../hooks/useGet";
 import usePost from "../../hooks/usePost";
-import { Alert } from "react-bootstrap";
 
 export default function AddMonth() {
-  const meses = [];
   const [dia, setDia] = useState("01");
   const [postData, salvar] = usePost(`meses/2021-${dia}`);
   const data = useGet(`meses`);
-  const [show, setShow] = useState(false);
-
-  for (let i = 1; i <= 12; i++) {
-    i <= 9 ? meses.push(`0${i}`) : meses.push(i);
-  }
+  const [teste, setTeste] = useState(false);
 
   async function addMes() {
-    if (Object.keys(data.data)[0] === `2021-${dia}`) return setShow(true) 
+    if (Object.keys(data.data)[0] === `2021-${dia}`) return setTeste(true) 
     await salvar({
       saida: 0,
     });
@@ -36,22 +32,13 @@ export default function AddMonth() {
           value={dia}
           onChange={(e) => setDia(e.target.value)}
         >
-          {meses.map((mes) => (
-            <option key={mes} value={mes}>
-              {mes}
-            </option>
-          ))}
+          <OptionsValues />
         </select>
         <button className="btn btn-success m-2" onClick={addMes}>
           Adicionar Mês
         </button>
       </div>
-      <Alert variant="warning" show={show} onClose={() => setShow(false)} dismissible>
-        <Alert.Heading>Mês já adicionado!</Alert.Heading>
-        <p>
-          Me parece que esse mês já foi adicionado na sua lista, tente inserir outro mês...
-        </p>
-      </Alert>
+     <AlertComponent props={teste} />
     </div>
   );
 }
