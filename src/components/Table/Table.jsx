@@ -10,9 +10,7 @@ export default function Table() {
         <thead>
           <tr>
             <th>Mês</th>
-            <th>Entrada</th>
             <th>Saida</th>
-            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -24,9 +22,7 @@ export default function Table() {
                   <td>
                     <Link to={`/movement/${d}`}>{d}</Link>
                   </td>
-                  <td>{data.data[d][id].entrada}</td>
                   <td>{data.data[d][id].saida}</td>
-                  <td>{data.data[d][id].Total}</td>
                 </tr>
               );
             })}
