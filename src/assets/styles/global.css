@@ -34,3 +34,6 @@ textarea {
   border: 2px solid #ffeeba;
   border-radius: 10px;
 }
+input.form-movement {
+  width: 6rem;
+}
