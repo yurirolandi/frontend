@@ -16,6 +16,7 @@ function Movement(props) {
   const [removeData, remover] = useDelete();
   const [nome, setDescricao] = useState("");
   const [valor, setValor] = useState("");
+  const [show, setShow] = useState(false);
 
   async function save() {
     if (nome !== "" && valor !== "") {
@@ -31,7 +32,7 @@ function Movement(props) {
         dataMeses.refetch();
       }, 10000);
     } else {
-      console.log('vazio')
+      return setShow(true);
     }
   }
 
@@ -113,6 +114,20 @@ function Movement(props) {
               </tr>
             </tbody>
           </table>
+          {show && (
+            <div className="warning">
+              <h5>
+                Campo vazio ou inválido!{" "}
+                <button className="close" onClick={() => setShow(false)}>
+                  x
+                </button>
+              </h5>
+
+              <p>
+                Inclua nome e valor!!!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
