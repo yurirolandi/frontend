@@ -69,7 +69,7 @@ function Movement(props) {
   function saveTotal() {
     let id = Object.keys(dataMeses.data)[0]
     patch(`meses/${props.match.params.data}/${id}`, {
-      saida: total
+      saida: total === '' ? 0 : total
     });
   }
 
