@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useGet from "../../hooks/useGet";
 
-export default function Table() {
-  const data = useGet(`meses`);
+export default function Table({ props }) {
   return (
     <div className="box">
       <table className="table">
@@ -14,9 +12,9 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.data &&
-            Object.keys(data.data).map((d) => {
-              let id = Object.keys(data.data[d]);
+          {props.data &&
+            Object.keys(props.data).map((d) => {
+              let id = Object.keys(props.data[d]);
               return (
                 <tr key={d}>
                   <td>
@@ -24,7 +22,7 @@ export default function Table() {
                   </td>
                   <td>
                     R${" "}
-                    {data.data[d][id].saida.toLocaleString("pt-br", {
+                    {props.data[d][id].saida.toLocaleString("pt-br", {
                       minimumFractionDigits: 2,
                     })}
                   </td>
