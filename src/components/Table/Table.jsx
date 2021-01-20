@@ -22,7 +22,12 @@ export default function Table() {
                   <td>
                     <Link to={`/movement/${d}`}>{d}</Link>
                   </td>
-                  <td>{data.data[d][id].saida}</td>
+                  <td>
+                    R${" "}
+                    {data.data[d][id].saida.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
                 </tr>
               );
             })}
