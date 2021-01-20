@@ -7,7 +7,7 @@ export default function Sidebar() {
   return (
     <aside className="app-sidebar">
       <Link to="/">
-        <h1 color="#FFF">Finaça</h1>
+        <h1 color="#FFF">Finança</h1>
       </Link>
      
     </aside>
