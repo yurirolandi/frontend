@@ -1,0 +1,40 @@
+.loader-box {
+  cursor: wait;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.loader {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@keyframes spinn {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.Loader-bar {
+  animation: spinn 1.5s ease infinite;
+}
+
+.loader-text {
+  color: white;
+  position: relative;
+  font-size: 1.8em;
+  margin-top: 0.5em;
+}
