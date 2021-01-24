@@ -1,7 +1,11 @@
 import axios from "axios";
 
-const api = axios.create({
+axios.defaults.validateStatus = code => code < 500;
+
+export const api = axios.create({
   baseURL: process.env.REACT_APP_API,
 });
 
-export default api;
+export const apiToken = axios.create({
+  baseURL: process.env.REACT_APP_APITOKEN,
+});
