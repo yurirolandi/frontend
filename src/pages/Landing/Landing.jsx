@@ -4,15 +4,15 @@ import SideBar from "../../components/SideBar/SideBar";
 import AddMonth from "../../components/AddMonth/AddMonth";
 
 function Landing() {
-  // const history = useHistory();
-  // const logado = () => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) history.push("/login");
-  // };
+  const history = useHistory();
+  const logado = () => {
+    const token = localStorage.getItem("token");
+    if (!token) history.push("/login");
+  };
 
-  // useEffect(() => {
-  //   logado();
-  // });
+  useEffect(() => {
+    logado();
+  });
 
   return (
     <div className="page-landing">
