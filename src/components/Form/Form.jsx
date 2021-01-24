@@ -1,26 +1,35 @@
-import React, { FormEvent, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import "./form.css";
-import api from "../../services/api";
+import usePostToken from "../../hooks/usePostToken";
 
 export default function Form() {
+  const [logado, setLogado] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [type, setType] = useState("");
+
+  const [postData, signin] = usePostToken(`${process.env.REACT_APP_TOKEN}`);
+  
+  useEffect(() => {
+    if (Object.keys(postData.data).length > 0) {
+      localStorage.setItem("token", postData.data.idToken);
+      localStorage.setItem("user", postData.data.email);
+      setLogado(true);
+    }
+  }, [postData]);
 
   async function handlerSubmit(event) {
     event.preventDefault();
 
-    // const data = {
-    //   name: name,
-    //   price: price,
-    //   type: type,
-    //   descriptions: descriptions,
-    // };
+    await signin({
+      email,
+      password,
+      returnSecureToken: true
+    });
+  }
 
-    // console.log("descriptions", data);
-    // await api.post("/product", data);
-
-    //history.push("/product");
+  if(logado) {
+    return <Redirect to="/" />
   }
 
   return (
