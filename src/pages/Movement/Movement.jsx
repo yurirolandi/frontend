@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import SideBar from "../../components/SideBar/SideBar";
 import OptionsValues from "../../components/Options/Options";
 import useGet from "../../hooks/useGet";
@@ -15,6 +15,8 @@ const useMovimentacaoApi = (dataMeses) => {
 };
 
 function Movement(props) {
+  const history = useHistory();
+
   const { data, salvar } = useMovimentacaoApi(props.match.params.data);
   const dataMeses = useGet(`meses/${props.match.params.data}`);
   const [parcelas, setParcelas] = useState("01");
@@ -27,6 +29,7 @@ function Movement(props) {
   const [total, setTotal] = useState("");
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const division = (number1, number2) => number1 / number2;
 
   async function save() {
     if (nome !== "" && valor !== "") {
@@ -48,7 +51,15 @@ function Movement(props) {
     let value = [];
     if (data.data) {
       Object.keys(data.data).forEach((valor) => {
-        value.push(parseInt(data.data[valor].valor));
+        if (data.data[valor].parcelas > 1) {
+          let newValue = division(
+            data.data[valor].valor,
+            data.data[valor].parcelas
+          );
+          value.push(newValue);
+        } else {
+          value.push(parseInt(data.data[valor].valor));
+        }
       });
     }
     if (value.length !== 0) {
@@ -70,11 +81,13 @@ function Movement(props) {
     }, 10000);
   }
 
-  function saveTotal() {
+  async function saveTotal() {
     let id = Object.keys(dataMeses.data)[0];
-    patch(`meses/${props.match.params.data}/${id}`, {
+    await patch(`meses/${props.match.params.data}/${id}`, {
       saida: total === "" ? 0 : total,
     });
+
+    history.push("/");
   }
 
   if (data.error === "Permission denied") {
@@ -104,7 +117,15 @@ function Movement(props) {
                     return (
                       <tr key={move}>
                         <td>{data.data[move].nome}</td>
-                        <td>{data.data[move].valor}</td>
+                        <td>
+                          R${" "}
+                          {parseInt(data.data[move].valor).toLocaleString(
+                            "pt-br",
+                            {
+                              minimumFractionDigits: 2,
+                            }
+                          )}
+                        </td>
                         <td>{data.data[move].parcelas}</td>
                         <td>
                           <button
