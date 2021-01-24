@@ -51,15 +51,15 @@ function Movement(props) {
     let value = [];
     if (data.data) {
       Object.keys(data.data).forEach((valor) => {
-        if (data.data[valor].parcelas > 1) {
-          let newValue = division(
-            data.data[valor].valor,
-            data.data[valor].parcelas
-          );
-          value.push(newValue);
-        } else {
+        // if (data.data[valor].parcelas > 1) {
+        //   let newValue = division(
+        //     data.data[valor].valor,
+        //     data.data[valor].parcelas
+        //   );
+        //   value.push(newValue);
+        // } else {
           value.push(parseInt(data.data[valor].valor));
-        }
+        // }
       });
     }
     if (value.length !== 0) {
