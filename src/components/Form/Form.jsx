@@ -33,7 +33,7 @@ export default function Form() {
       return history.push("/");
     } catch (error) {
       console.log(error);
-      if (error.code === "auth/user-not-found") setShow(true);
+      if (error) setShow(true);
     }
   }
 
