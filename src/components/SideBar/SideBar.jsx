@@ -29,7 +29,7 @@ export default function Sidebar() {
       </Link>
       {logado && (
         <div>
-          <div className="d-flex">
+          <div className="d-flex flex-wrap">
             <div>
               <h6 className="mb-0 text-light">Bem vindo:</h6>
               <h6 className="mb-0 mr-3 text-light">{user}</h6>
