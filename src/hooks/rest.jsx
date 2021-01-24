@@ -13,6 +13,14 @@ function reducer(state, action) {
       data: action.data,
     };
   }
+
+  if (action.type === "FAILURE") {
+    return {
+      ...state,
+      error: action.error,
+      code: action.code
+    };
+  }
   return state;
 }
 export default reducer;

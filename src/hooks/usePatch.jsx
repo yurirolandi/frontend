@@ -1,7 +1,7 @@
-
 import React, { useReducer } from "react";
 import reducer from "./rest";
-import api from "../services/api";
+import { api } from "../services/api";
+import getAuth from "./getAuth.js";
 
 function usePatch() {
   const [data, dispatch] = useReducer(reducer, {
@@ -11,7 +11,7 @@ function usePatch() {
     dispatch({
       type: "REQUEST",
     });
-    await api.patch(`${url}.json`, data);
+    await api.patch(`${url}.json${getAuth()}`, data);
     dispatch({
       type: "SUCCESS",
     });

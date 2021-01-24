@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import reducer from "./rest";
-import api from "../services/api";
+import { api } from "../services/api";
+import getAuth from "./getAuth.js";
 
 function usePost(url) {
   const [data, dispatch] = useReducer(reducer, {
@@ -10,7 +11,7 @@ function usePost(url) {
     dispatch({
       type: "REQUEST",
     });
-    const response = await api.post(`${url}.json`, data);
+    const response = await api.post(`${url}.json${getAuth()}`, data);
     dispatch({
       type: "SUCCESS",
       data: response.data,
