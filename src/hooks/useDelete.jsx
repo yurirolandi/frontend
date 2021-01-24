@@ -1,7 +1,6 @@
 import React, { useReducer } from "react";
 import reducer from "./rest";
 import { api } from "../services/api";
-import getAuth from "./getAuth.js";
 
 function useDelete() {
   const [data, dispatch] = useReducer(reducer, {
@@ -11,7 +10,7 @@ function useDelete() {
     dispatch({
       type: "REQUEST",
     });
-    await api.delete(`${url}.json${getAuth()}`);
+    await api.delete(`${url}.json`);
     dispatch({
       type: "SUCCESS",
     });

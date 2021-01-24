@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import reducer from "./rest";
 import { api } from "../services/api";
-import getAuth from "./getAuth.js";
 
 function useGet(url) {
   const [data, dispatch] = useReducer(reducer, {
@@ -12,7 +11,7 @@ function useGet(url) {
       dispatch({
         type: "REQUEST",
       });
-      const response = await api.get(`${url}.json${getAuth()}`);
+      const response = await api.get(`${url}.json`);
       if (response.data.error && Object.keys(response.data.error).length > 0) {
         dispatch({
           type: "FAILURE",
