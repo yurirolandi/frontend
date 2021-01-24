@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import SideBar from "../../components/SideBar/SideBar";
 import OptionsValues from "../../components/Options/Options";
 import useGet from "../../hooks/useGet";
@@ -7,13 +8,16 @@ import useDelete from "../../hooks/useDelete";
 import usePatch from "../../hooks/usePatch";
 import { FaTrash } from "react-icons/fa";
 
+const useMovimentacaoApi = (dataMeses) => {
+  const data = useGet(`movimentacoes/${dataMeses}`);
+  const [postData, salvar] = usePost(`movimentacoes/${dataMeses}`);
+  return { data, salvar };
+};
+
 function Movement(props) {
-  const data = useGet(`movimentacoes/${props.match.params.data}`);
+  const { data, salvar } = useMovimentacaoApi(props.match.params.data);
   const dataMeses = useGet(`meses/${props.match.params.data}`);
   const [parcelas, setParcelas] = useState("01");
-  const [postData, salvar] = usePost(
-    `movimentacoes/${props.match.params.data}`
-  );
 
   const [dataPatch, patch] = usePatch();
   const [removeData, remover] = useDelete();
@@ -48,7 +52,7 @@ function Movement(props) {
       });
     }
     if (value.length !== 0) {
-      let total = value.reduce(reducer); 
+      let total = value.reduce(reducer);
       setTotal(total);
     }
     return;
@@ -67,10 +71,14 @@ function Movement(props) {
   }
 
   function saveTotal() {
-    let id = Object.keys(dataMeses.data)[0]
+    let id = Object.keys(dataMeses.data)[0];
     patch(`meses/${props.match.params.data}/${id}`, {
-      saida: total === '' ? 0 : total
+      saida: total === "" ? 0 : total,
     });
+  }
+
+  if (data.error === "Permission denied") {
+    return <Redirect to="/login" />;
   }
 
   return (
@@ -144,7 +152,9 @@ function Movement(props) {
                 </tr>
               </tbody>
             </table>
-            <button className="btn btn-primary" onClick={saveTotal}>Finalizar </button>
+            <button className="btn btn-primary" onClick={saveTotal}>
+              Finalizar{" "}
+            </button>
           </div>
           {show && (
             <div className="warning">
