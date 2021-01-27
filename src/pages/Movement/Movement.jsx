@@ -20,6 +20,7 @@ function Movement(props) {
   const { data, salvar } = useMovimentacaoApi(props.match.params.data);
   const dataMeses = useGet(`meses/${props.match.params.data}`);
   const [parcelas, setParcelas] = useState("01");
+  const [totalParcelas, setTotalParcelas] = useState("01");
 
   const [dataPatch, patch] = usePatch();
   const [removeData, remover] = useDelete();
@@ -37,6 +38,7 @@ function Movement(props) {
         nome,
         valor,
         parcelas,
+        totalParcelas,
       });
       data.refetch();
       dataMeses.refetch();
@@ -58,7 +60,7 @@ function Movement(props) {
         //   );
         //   value.push(newValue);
         // } else {
-          value.push(parseInt(data.data[valor].valor));
+        value.push(parseInt(data.data[valor].valor));
         // }
       });
     }
@@ -119,14 +121,14 @@ function Movement(props) {
                         <td>{data.data[move].nome}</td>
                         <td>
                           R${" "}
-                          {parseInt(data.data[move].valor).toLocaleString(
-                            "pt-br",
-                            {
-                              minimumFractionDigits: 2,
-                            }
-                          )}
+                          {data.data[move].valor.toLocaleString("pt-br", {
+                            minimumFractionDigits: 2,
+                          })}
                         </td>
-                        <td>{data.data[move].parcelas}</td>
+                        <td>
+                          {data.data[move].parcelas} /{" "}
+                          {data.data[move].totalParcelas}
+                        </td>
                         <td>
                           <button
                             className="btn btn-danger ml-2"
@@ -158,9 +160,17 @@ function Movement(props) {
                   </td>
                   <td>
                     <select
-                      className="form-select p-1"
+                      className="form-select p-1 mr-2"
                       onChange={(evt) => setParcelas(evt.target.value)}
                       value={parcelas}
+                    >
+                      <OptionsValues />
+                    </select>
+
+                    <select
+                      className="form-select p-1"
+                      onChange={(evt) => setTotalParcelas(evt.target.value)}
+                      value={totalParcelas}
                     >
                       <OptionsValues />
                     </select>
