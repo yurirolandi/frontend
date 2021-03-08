@@ -2,7 +2,7 @@ import React from "react";
 
 function OptionsValues() {
   const number = [];
-  for (let i = 1; i <= 12; i++) {
+  for (let i = 1; i <= 24; i++) {
     i <= 9 ? number.push(`0${i}`) : number.push(i);
   }
 
