@@ -30,7 +30,6 @@ function Movement(props) {
   const [total, setTotal] = useState("");
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  const division = (number1, number2) => number1 / number2;
 
   async function save() {
     if (nome !== "" && valor !== "") {
@@ -53,15 +52,7 @@ function Movement(props) {
     let value = [];
     if (data.data) {
       Object.keys(data.data).forEach((valor) => {
-        // if (data.data[valor].parcelas > 1) {
-        //   let newValue = division(
-        //     data.data[valor].valor,
-        //     data.data[valor].parcelas
-        //   );
-        //   value.push(newValue);
-        // } else {
         value.push(parseInt(data.data[valor].valor));
-        // }
       });
     }
     if (value.length !== 0) {
