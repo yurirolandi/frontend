@@ -9,6 +9,7 @@ export default function Table({ props }) {
           <tr>
             <th>Mês</th>
             <th>Saida</th>
+            <th>Divisão</th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,12 @@ export default function Table({ props }) {
                   <td>
                     R${" "}
                     {props.data[d][id].saida.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td>
+                    R${" "}
+                    {(props.data[d][id].saida / 2).toLocaleString("pt-br", {
                       minimumFractionDigits: 2,
                     })}
                   </td>
