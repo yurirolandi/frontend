@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { WhatsappIcon, WhatsappShareButton } from "react-share";
 
 export default function Table({ props }) {
   return (
@@ -10,6 +11,7 @@ export default function Table({ props }) {
             <th>Mês</th>
             <th>Saida</th>
             <th>Divisão</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +34,23 @@ export default function Table({ props }) {
                     {(props.data[d][id].saida / 2).toLocaleString("pt-br", {
                       minimumFractionDigits: 2,
                     })}
+                  </td>
+                  <td>
+                    <WhatsappShareButton
+                      title="Seu valor a ser pago esse mês"
+                      url={`
+                        Mês : ${d}
+                        Valor : R$ ${(
+                          props.data[d][id].saida / 2
+                        ).toLocaleString("pt-br", {
+                          minimumFractionDigits: 2,
+                        })}
+                      
+                      
+                      `}
+                    >
+                      <WhatsappIcon size={26} round={true} />
+                    </WhatsappShareButton>
                   </td>
                 </tr>
               );
